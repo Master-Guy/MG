@@ -1,5 +1,6 @@
 package com.bukkit.mg.mg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.World;
@@ -14,6 +15,7 @@ import org.bukkit.event.player.PlayerListener;
 public class MGPlayerListener extends PlayerListener {
     private final MG plugin;
 	private HashMap<String, Integer> stickMap;
+	private ArrayList<String> lockingList = new ArrayList<String>();
 	private Integer minX, minY, minZ, maxX, maxY, maxZ, newDataType;
 	private World world;
 
@@ -64,6 +66,18 @@ public class MGPlayerListener extends PlayerListener {
     			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
     		}
         	event.setCancelled(true);
+        }
+        
+        // Protect chests
+        if(split[0].equalsIgnoreCase("/lock")) {
+            if(!lockingList.contains(event.getPlayer().getName())) {
+            	event.getPlayer().sendMessage("Please right-click the door or chest you wish to lock.");
+                lockingList.remove(lockingList.indexOf(event.getPlayer().getName()));
+            } else {
+            	event.getPlayer().sendMessage("Locking cancelled.");
+                lockingList.add(event.getPlayer().getName());
+            }
+            event.setCancelled(true);
         }
     }
 
