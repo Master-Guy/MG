@@ -15,12 +15,13 @@ public class MGBlockListener extends BlockListener {
     private final MG plugin;
     private int I;
 	private HashMap<String, Integer> stickMap;
-
+	
     public MGBlockListener(final MG plugin) {
         this.plugin = plugin;
+        log("block loaded");
     }
     
-    public void onBlockRightClicked(BlockRightClickEvent event) {
+    public void onBlockRightClick(BlockRightClickEvent event) {
     	if(event.getItemInHand().getTypeId() == 280) {
             stickMap = this.plugin.stickMap;
     		log("stickMap size: " + stickMap.size());

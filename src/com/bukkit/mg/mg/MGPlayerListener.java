@@ -99,7 +99,7 @@ public class MGPlayerListener extends PlayerListener {
 						world = this.plugin.getServer().getWorlds()[0];
 						world.getBlockAt(minX, minY, minZ).setTypeId(blockType);
 					} catch (Exception e) {
-						log("Fail at "+minX+"/"+minY+"/"+minZ+"!");
+						log("MG: Fail at "+minX+"/"+minY+"/"+minZ+"!");
 						return false;
 					} finally {
 					}
@@ -142,7 +142,7 @@ public class MGPlayerListener extends PlayerListener {
 						world = this.plugin.getServer().getWorlds()[0];
 						world.getBlockAt(minX, minY, minZ).setTypeId(0);
 					} catch (Exception e) {
-						log("Fail at "+minX+"/"+minY+"/"+minZ+"!");
+						log("MG: Fail at "+minX+"/"+minY+"/"+minZ+"!");
 						return false;
 					} finally {
 					}
