@@ -2,6 +2,7 @@ package com.bukkit.mg.mg;
 
 import java.util.HashMap;
 import org.bukkit.World;
+//import org.bukkit.Material;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 
@@ -15,6 +16,7 @@ public class MGPlayerListener extends PlayerListener {
 	private HashMap<String, Integer> stickMap;
 	private Integer minX, minY, minZ, maxX, maxY, maxZ, newDataType;
 	private World world;
+	private final Settings Settings = new Settings();
 
     public MGPlayerListener(MG instance) {
         plugin = instance;
@@ -24,44 +26,95 @@ public class MGPlayerListener extends PlayerListener {
     	String[] split = event.getMessage().split(" ");
         stickMap = this.plugin.stickMap;
         final String command = split[0].toString();
+        boolean allowPlayer, allowBlock;
+        Integer I;
+        /*
+        if(split.length > 1) {
+	        event.getPlayer().sendMessage("ndt for '"+split[1]+"': "+Material.getMaterial(split[1]).toString());
+        }
+        newDataType = 0;
+        
+		try {
+			newDataType = Material.getMaterial(split[1]).getId();
+		} catch (Exception e) {
+			event.getPlayer().sendMessage("You need to enter a valid blocktype.");
+		} finally {
+		}
+		*/
+		
+    	allowPlayer = false;
+    	I = 0;
+    	while (I < Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
+    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/MG.ini", "allowedPlayers", "AdminAccount1,AdminAccount2,AdminAccount3", ",")[I])) {
+    			allowPlayer = true;
+    		}
+    		I = I + 1;
+    	}
+    	
+    	allowBlock = false;
+    	I = 0;
+    	while (I < Settings.getSetting("settings/MG.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",").length) {
+    		if(split[1].equalsIgnoreCase(Settings.getSetting("settings/MG.ini", "allowedBlocks", "0,1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",")[I])) {
+    			allowBlock = true;
+    		}
+    		I = I + 1;
+    	}
         
         // Fill cubic
-        if(command.equalsIgnoreCase("/fill")) {
-        	if(split.length == 2) {
-        		try {
-        			newDataType = Integer.parseInt(split[1]);
-		    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
-		    			if(!fillCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
-		    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
-		    			}
+        if(command.equalsIgnoreCase(Settings.getSetting("settings/MG.ini", "fillCommand", "/fill")[0])) {
+        	if(allowPlayer) {
+        		if(allowBlock) {
+		        	if(split.length == 2) {
+		        		try {
+		        			newDataType = Integer.parseInt(split[1]);
+				    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
+				    			if(!fillCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
+				    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
+				    			}
+				    		} else {
+				    			event.getPlayer().sendMessage("You need to set two positions first.");
+				    		}
+		        		} catch (Exception e) {
+		        			event.getPlayer().sendMessage("You need to enter a valid blocktype.");
+		        		} finally {
+			    		}
 		    		} else {
-		    			event.getPlayer().sendMessage("You need to set two positions first.");
+		    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
 		    		}
-        		} finally {
-	    		}
-    		} else {
-    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
-    		}
+        		} else {
+        			event.getPlayer().sendMessage("This block is not allowed!");
+        		}
+        	} else {
+        		event.getPlayer().sendMessage("You do not have access to this command!");
+        	}
         	event.setCancelled(true);
         }
         
         // Fill hollow cubic
-        if(command.equalsIgnoreCase("/fillhollow")) {
-        	if(split.length == 2) {
-        		try {
-        			newDataType = Integer.parseInt(split[1]);
-		    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
-		    			if(!fillHollowCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
-		    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
-		    			}
+        if(command.equalsIgnoreCase(Settings.getSetting("settings/MG.ini", "fillHollowCommand", "/fillhollow")[0])) {
+        	if(allowPlayer) {
+            	if(allowBlock) {
+		        	if(split.length == 2) {
+		        		try {
+		        			newDataType = Integer.parseInt(split[1]);
+				    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
+				    			if(!fillHollowCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
+				    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
+				    			}
+				    		} else {
+				    			event.getPlayer().sendMessage("You need to set two positions first.");
+				    		}
+		        		} finally {
+			    		}
 		    		} else {
-		    			event.getPlayer().sendMessage("You need to set two positions first.");
+		    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
 		    		}
-        		} finally {
-	    		}
-    		} else {
-    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
-    		}
+            	} else {
+            		event.getPlayer().sendMessage("This block is not allowed!");
+            	}
+        	} else {
+        		event.getPlayer().sendMessage("You do not have access to this command!");
+        	}
         	event.setCancelled(true);
         }
     }
