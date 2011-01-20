@@ -33,6 +33,7 @@ public class MG extends JavaPlugin {
         pm.registerEvent(Event.Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_COMMAND, playerListener, Priority.Normal, this);
         log("MG enabled");
+        Settings.testFolderExists("settings");
         Settings.getSetting("settings/MG.ini", "fillCommand", "/fill");
         Settings.getSetting("settings/MG.ini", "fillHollowCommand", "/fillhollow");
         Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");

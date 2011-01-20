@@ -28,20 +28,7 @@ public class MGPlayerListener extends PlayerListener {
         final String command = split[0].toString();
         boolean allowPlayer, allowBlock;
         Integer I;
-        /*
-        if(split.length > 1) {
-	        event.getPlayer().sendMessage("ndt for '"+split[1]+"': "+Material.getMaterial(split[1]).toString());
-        }
-        newDataType = 0;
         
-		try {
-			newDataType = Material.getMaterial(split[1]).getId();
-		} catch (Exception e) {
-			event.getPlayer().sendMessage("You need to enter a valid blocktype.");
-		} finally {
-		}
-		*/
-		
     	allowPlayer = false;
     	I = 0;
     	while (I < Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
@@ -49,6 +36,9 @@ public class MGPlayerListener extends PlayerListener {
     			allowPlayer = true;
     		}
     		I = I + 1;
+    	}
+    	if(Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
+    		allowPlayer = true;
     	}
     	
     	allowBlock = false;
@@ -58,6 +48,9 @@ public class MGPlayerListener extends PlayerListener {
     			allowBlock = true;
     		}
     		I = I + 1;
+    	}
+    	if(Settings.getSetting("settings/MG.ini", "allowedBlocks", "0,1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",")[0].equalsIgnoreCase("*")) {
+    		allowBlock = true;
     	}
         
         // Fill cubic

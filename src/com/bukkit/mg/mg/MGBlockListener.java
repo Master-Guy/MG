@@ -32,8 +32,11 @@ public class MGBlockListener extends BlockListener {
     		}
     		I = I + 1;
     	}
-    	if(allowPlayer) {
-	    	if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/MG.ini", "toolID", "280")[0])) {
+    	if(Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
+    		allowPlayer = true;
+    	}
+	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/MG.ini", "toolID", "280")[0])) {
+	    	if(allowPlayer) {
 	            stickMap = this.plugin.stickMap;
 				if(!stickMap.containsKey(event.getPlayer().getName()+"1X") || stickMap.containsKey(event.getPlayer().getName()+"2X")) {
 					stickMap.put(event.getPlayer().getName()+"1X", event.getBlockAgainst().getX());
@@ -49,9 +52,9 @@ public class MGBlockListener extends BlockListener {
 					stickMap.put(event.getPlayer().getName()+"2Z", event.getBlockAgainst().getZ());
 					event.getPlayer().sendMessage(ChatColor.GREEN+"Position 2 set at "+event.getBlockAgainst().getX()+"/"+event.getBlockAgainst().getY()+"/"+event.getBlockAgainst().getZ());
 				}
+	    	} else {
+	    		event.getPlayer().sendMessage("You are not allowed to use this!");
 	    	}
-    	} else {
-    		event.getPlayer().sendMessage("You are not allowed to use this!");
     	}
     	return;
     }
