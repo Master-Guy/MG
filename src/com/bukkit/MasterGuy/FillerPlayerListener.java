@@ -29,88 +29,95 @@ public class FillerPlayerListener extends PlayerListener {
         boolean allowPlayer, allowBlock;
         Integer I;
         
-    	allowPlayer = false;
-    	I = 0;
-    	setting = Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
-    	while (I < setting.length) {
-    		if(event.getPlayer().getName().equalsIgnoreCase(setting[I])) {
-    			allowPlayer = true;
-    		}
-    		I = I + 1;
-    	}
-    	if(setting[0].equalsIgnoreCase("*")) {
-    		allowPlayer = true;
-    	}
-    	
-    	allowBlock = false;
-    	I = 0;
-    	setting = Settings.getSetting("settings/Filler.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
-    	while (I < setting.length) {
-    		if(split[1].equalsIgnoreCase(setting[I])) {
-    			allowBlock = true;
-    		}
-    		I = I + 1;
-    	}
-    	if(setting[0].equalsIgnoreCase("*")) {
-    		allowBlock = true;
-    	}
-        
-        // Fill cubic
-        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0])) {
-        	if(allowPlayer) {
-        		if(allowBlock) {
-		        	if(split.length == 2) {
-		        		try {
-		        			newDataType = Integer.parseInt(split[1]);
-				    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
-				    			if(!fillCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
-				    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
-				    			}
-				    		} else {
-				    			event.getPlayer().sendMessage("You need to set two positions first.");
-				    		}
-		        		} catch (Exception e) {
-		        			event.getPlayer().sendMessage("You need to enter a valid blocktype.");
-		        		} finally {
-			    		}
-		    		} else {
-		    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
+        if(
+            	command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0]) ||
+            	command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])
+        ) {
+	    	allowPlayer = false;
+	    	I = 0;
+	    	setting = Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
+	    	while (I < setting.length) {
+	    		if(event.getPlayer().getName().equalsIgnoreCase(setting[I])) {
+	    			allowPlayer = true;
+	    		}
+	    		I = I + 1;
+	    	}
+	    	if(setting[0].equalsIgnoreCase("*")) {
+	    		allowPlayer = true;
+	    	}
+	    	
+	    	allowBlock = false;
+	    	I = 0;
+	    	setting = Settings.getSetting("settings/Filler.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
+	    	while (I < setting.length) {
+	    		if(split.length > 1) {
+		    		if(split[1].equalsIgnoreCase(setting[I])) {
+		    			allowBlock = true;
 		    		}
-        		} else {
-        			event.getPlayer().sendMessage("This block is not allowed!");
-        		}
-        	} else {
-        		event.getPlayer().sendMessage("You do not have access to this command!");
-        	}
-        	event.setCancelled(true);
-        }
-        
-        // Fill hollow cubic
-        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])) {
-        	if(allowPlayer) {
-            	if(allowBlock) {
-		        	if(split.length == 2) {
-		        		try {
-		        			newDataType = Integer.parseInt(split[1]);
-				    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
-				    			if(!fillHollowCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
-				    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
-				    			}
-				    		} else {
-				    			event.getPlayer().sendMessage("You need to set two positions first.");
+	    		}
+	    		I = I + 1;
+	    	}
+	    	if(setting[0].equalsIgnoreCase("*")) {
+	    		allowBlock = true;
+	    	}
+	        
+	        // Fill cubic
+	        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0])) {
+	        	if(allowPlayer) {
+	        		if(allowBlock) {
+			        	if(split.length == 2) {
+			        		try {
+			        			newDataType = Integer.parseInt(split[1]);
+					    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
+					    			if(!fillCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
+					    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
+					    			}
+					    		} else {
+					    			event.getPlayer().sendMessage("You need to set two positions first.");
+					    		}
+			        		} catch (Exception e) {
+			        			event.getPlayer().sendMessage("You need to enter a valid blocktype.");
+			        		} finally {
 				    		}
-		        		} finally {
+			    		} else {
+			    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
 			    		}
-		    		} else {
-		    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
-		    		}
-            	} else {
-            		event.getPlayer().sendMessage("This block is not allowed!");
-            	}
-        	} else {
-        		event.getPlayer().sendMessage("You do not have access to this command!");
-        	}
-        	event.setCancelled(true);
+	        		} else {
+	        			event.getPlayer().sendMessage("This block is not allowed!");
+	        		}
+	        	} else {
+	        		event.getPlayer().sendMessage("You do not have access to this command!");
+	        	}
+	        	event.setCancelled(true);
+	        }
+	        
+	        // Fill hollow cubic
+	        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])) {
+	        	if(allowPlayer) {
+	            	if(allowBlock) {
+			        	if(split.length == 2) {
+			        		try {
+			        			newDataType = Integer.parseInt(split[1]);
+					    		if(stickMap.containsKey(event.getPlayer().getName()+"2X")) {
+					    			if(!fillHollowCubic(newDataType, stickMap.get(event.getPlayer().getName()+"1X"), stickMap.get(event.getPlayer().getName()+"1Y"), stickMap.get(event.getPlayer().getName()+"1Z"), stickMap.get(event.getPlayer().getName()+"2X"), stickMap.get(event.getPlayer().getName()+"2Y"), stickMap.get(event.getPlayer().getName()+"2Z"))) {
+					    				event.getPlayer().sendMessage("Something went wrong while replacing the blocks. Please try again or ask an admin to check the problem.");
+					    			}
+					    		} else {
+					    			event.getPlayer().sendMessage("You need to set two positions first.");
+					    		}
+			        		} finally {
+				    		}
+			    		} else {
+			    			event.getPlayer().sendMessage("This command requires a blocktype number as parameter.");
+			    		}
+	            	} else {
+	            		event.getPlayer().sendMessage("This block is not allowed!");
+	            	}
+	        	} else {
+	        		event.getPlayer().sendMessage("You do not have access to this command!");
+	        	}
+	        	event.setCancelled(true);
+	        }
         }
     }
 
