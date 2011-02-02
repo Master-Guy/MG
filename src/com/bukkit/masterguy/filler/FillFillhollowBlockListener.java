@@ -1,4 +1,4 @@
-package com.bukkit.mg.mg;
+package com.bukkit.masterguy.filler;
 
 import java.util.HashMap;
 
@@ -7,18 +7,18 @@ import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockRightClickEvent;
 
 /**
- * MG block listener
+ * Filler block listener
  * @author Master-Guy
  */
 
-public class MGBlockListener extends BlockListener {
-    private final MG plugin;
+public class FillFillhollowBlockListener extends BlockListener {
+    private final FillFillhollow plugin;
     private int I;
     private boolean allowPlayer;
 	private HashMap<String, Integer> stickMap;
 	private final Settings Settings = new Settings();
 	
-    public MGBlockListener(final MG plugin) {
+    public FillFillhollowBlockListener(final FillFillhollow plugin) {
         this.plugin = plugin;
         log("block loaded");
     }
@@ -26,16 +26,16 @@ public class MGBlockListener extends BlockListener {
     public void onBlockRightClick(BlockRightClickEvent event) {
     	allowPlayer = false;
     	I = 0;
-    	while (I < Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
-    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
+    	while (I < Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
+    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
     			allowPlayer = true;
     		}
     		I = I + 1;
     	}
-    	if(Settings.getSetting("settings/MG.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
+    	if(Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
     		allowPlayer = true;
     	}
-	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/MG.ini", "toolID", "280")[0])) {
+	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/FillFillhollow.ini", "toolID", "280")[0])) {
 	    	if(allowPlayer) {
 	            stickMap = this.plugin.stickMap;
 				if(!stickMap.containsKey(event.getPlayer().getName()+"1X") || stickMap.containsKey(event.getPlayer().getName()+"2X")) {

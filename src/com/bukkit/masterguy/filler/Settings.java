@@ -1,4 +1,4 @@
-package com.bukkit.mg.mg;
+package com.bukkit.masterguy.filler;
 
 import java.io.BufferedReader;
 import java.io.File;
