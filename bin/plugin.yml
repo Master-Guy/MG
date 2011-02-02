@@ -1,3 +1,3 @@
-name: MG
-main: com.bukkit.mg.mg.MG
-version: 0.0.1 
+name: Filler
+main: com.bukkit.MasterGuy.Filler
+version: 0.2

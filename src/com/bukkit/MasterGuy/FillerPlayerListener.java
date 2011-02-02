@@ -1,4 +1,4 @@
-package com.bukkit.masterguy.filler;
+package com.bukkit.MasterGuy;
 
 import java.util.HashMap;
 import org.bukkit.World;
@@ -11,14 +11,14 @@ import org.bukkit.event.player.PlayerListener;
  * @author Master-Guy
  */
 
-public class FillFillhollowPlayerListener extends PlayerListener {
-    private final FillFillhollow plugin;
+public class FillerPlayerListener extends PlayerListener {
+    private final Filler plugin;
 	private HashMap<String, Integer> stickMap;
 	private Integer minX, minY, minZ, maxX, maxY, maxZ, newDataType;
 	private World world;
 	private final Settings Settings = new Settings();
 
-    public FillFillhollowPlayerListener(FillFillhollow instance) {
+    public FillerPlayerListener(Filler instance) {
         plugin = instance;
     }
     
@@ -31,7 +31,7 @@ public class FillFillhollowPlayerListener extends PlayerListener {
         
     	allowPlayer = false;
     	I = 0;
-    	setting = Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
+    	setting = Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
     	while (I < setting.length) {
     		if(event.getPlayer().getName().equalsIgnoreCase(setting[I])) {
     			allowPlayer = true;
@@ -44,7 +44,7 @@ public class FillFillhollowPlayerListener extends PlayerListener {
     	
     	allowBlock = false;
     	I = 0;
-    	setting = Settings.getSetting("settings/FillFillhollow.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
+    	setting = Settings.getSetting("settings/Filler.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
     	while (I < setting.length) {
     		if(split[1].equalsIgnoreCase(setting[I])) {
     			allowBlock = true;
@@ -56,7 +56,7 @@ public class FillFillhollowPlayerListener extends PlayerListener {
     	}
         
         // Fill cubic
-        if(command.equalsIgnoreCase(Settings.getSetting("settings/FillFillhollow.ini", "fillCommand", "/fill")[0])) {
+        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0])) {
         	if(allowPlayer) {
         		if(allowBlock) {
 		        	if(split.length == 2) {
@@ -86,7 +86,7 @@ public class FillFillhollowPlayerListener extends PlayerListener {
         }
         
         // Fill hollow cubic
-        if(command.equalsIgnoreCase(Settings.getSetting("settings/FillFillhollow.ini", "fillHollowCommand", "/fillhollow")[0])) {
+        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])) {
         	if(allowPlayer) {
             	if(allowBlock) {
 		        	if(split.length == 2) {

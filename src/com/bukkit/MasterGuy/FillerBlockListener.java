@@ -1,4 +1,4 @@
-package com.bukkit.masterguy.filler;
+package com.bukkit.MasterGuy;
 
 import java.util.HashMap;
 
@@ -11,14 +11,14 @@ import org.bukkit.event.block.BlockRightClickEvent;
  * @author Master-Guy
  */
 
-public class FillFillhollowBlockListener extends BlockListener {
-    private final FillFillhollow plugin;
+public class FillerBlockListener extends BlockListener {
+    private final Filler plugin;
     private int I;
     private boolean allowPlayer;
 	private HashMap<String, Integer> stickMap;
 	private final Settings Settings = new Settings();
 	
-    public FillFillhollowBlockListener(final FillFillhollow plugin) {
+    public FillerBlockListener(final Filler plugin) {
         this.plugin = plugin;
         log("block loaded");
     }
@@ -26,16 +26,16 @@ public class FillFillhollowBlockListener extends BlockListener {
     public void onBlockRightClick(BlockRightClickEvent event) {
     	allowPlayer = false;
     	I = 0;
-    	while (I < Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
-    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
+    	while (I < Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
+    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
     			allowPlayer = true;
     		}
     		I = I + 1;
     	}
-    	if(Settings.getSetting("settings/FillFillhollow.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
+    	if(Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
     		allowPlayer = true;
     	}
-	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/FillFillhollow.ini", "toolID", "280")[0])) {
+	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/Filler.ini", "toolID", "280")[0])) {
 	    	if(allowPlayer) {
 	            stickMap = this.plugin.stickMap;
 				if(!stickMap.containsKey(event.getPlayer().getName()+"1X") || stickMap.containsKey(event.getPlayer().getName()+"2X")) {
