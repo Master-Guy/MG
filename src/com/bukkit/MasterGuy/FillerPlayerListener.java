@@ -20,6 +20,7 @@ public class FillerPlayerListener extends PlayerListener {
 
     public FillerPlayerListener(Filler instance) {
         plugin = instance;
+        Settings.testFolderExists(plugin.iniPath);
     }
     
     public void onPlayerCommand(PlayerChatEvent event) {
@@ -30,12 +31,12 @@ public class FillerPlayerListener extends PlayerListener {
         Integer I;
         
         if(
-            	command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0]) ||
-            	command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])
+            	command.equalsIgnoreCase(Settings.getSetting(plugin.iniFile, "fillCommand", "/fill")[0]) ||
+            	command.equalsIgnoreCase(Settings.getSetting(plugin.iniFile, "fillHollowCommand", "/fillhollow")[0])
         ) {
 	    	allowPlayer = false;
 	    	I = 0;
-	    	setting = Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
+	    	setting = Settings.getSetting(plugin.iniFile, "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",");
 	    	while (I < setting.length) {
 	    		if(event.getPlayer().getName().equalsIgnoreCase(setting[I])) {
 	    			allowPlayer = true;
@@ -48,7 +49,7 @@ public class FillerPlayerListener extends PlayerListener {
 	    	
 	    	allowBlock = false;
 	    	I = 0;
-	    	setting = Settings.getSetting("settings/Filler.ini", "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
+	    	setting = Settings.getSetting(plugin.iniFile, "allowedBlocks", "1,2,3,4,5,7,8,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,56,57,58,60,61,67,73,74,79,80,81,82,83,84,85,86,87,88,89,91,92", ",");
 	    	while (I < setting.length) {
 	    		if(split.length > 1) {
 		    		if(split[1].equalsIgnoreCase(setting[I])) {
@@ -62,7 +63,7 @@ public class FillerPlayerListener extends PlayerListener {
 	    	}
 	        
 	        // Fill cubic
-	        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillCommand", "/fill")[0])) {
+	        if(command.equalsIgnoreCase(Settings.getSetting(plugin.iniFile, "fillCommand", "/fill")[0])) {
 	        	if(allowPlayer) {
 	        		if(allowBlock) {
 			        	if(split.length == 2) {
@@ -92,7 +93,7 @@ public class FillerPlayerListener extends PlayerListener {
 	        }
 	        
 	        // Fill hollow cubic
-	        if(command.equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "fillHollowCommand", "/fillhollow")[0])) {
+	        if(command.equalsIgnoreCase(Settings.getSetting(plugin.iniFile, "fillHollowCommand", "/fillhollow")[0])) {
 	        	if(allowPlayer) {
 	            	if(allowBlock) {
 			        	if(split.length == 2) {

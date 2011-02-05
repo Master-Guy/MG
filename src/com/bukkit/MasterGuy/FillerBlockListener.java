@@ -20,22 +20,22 @@ public class FillerBlockListener extends BlockListener {
 	
     public FillerBlockListener(final Filler plugin) {
         this.plugin = plugin;
-        log("block loaded");
+        Settings.testFolderExists(plugin.iniPath);
     }
     
     public void onBlockRightClick(BlockRightClickEvent event) {
     	allowPlayer = false;
     	I = 0;
-    	while (I < Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
-    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
+    	while (I < Settings.getSetting(plugin.iniFile, "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",").length) {
+    		if(event.getPlayer().getName().equalsIgnoreCase(Settings.getSetting(plugin.iniFile, "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[I])) {
     			allowPlayer = true;
     		}
     		I = I + 1;
     	}
-    	if(Settings.getSetting("settings/Filler.ini", "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
+    	if(Settings.getSetting(plugin.iniFile, "allowedPlayers", "MasterGuy013,AdminAccount1,ModAccount2,PlayerAccount3", ",")[0].equalsIgnoreCase("*")) {
     		allowPlayer = true;
     	}
-	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting("settings/Filler.ini", "toolID", "280")[0])) {
+	    if(event.getItemInHand().getTypeId() == Integer.parseInt(Settings.getSetting(plugin.iniFile, "toolID", "280")[0])) {
 	    	if(allowPlayer) {
 	            stickMap = this.plugin.stickMap;
 				if(!stickMap.containsKey(event.getPlayer().getName()+"1X") || stickMap.containsKey(event.getPlayer().getName()+"2X")) {
