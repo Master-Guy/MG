@@ -1,8 +1,8 @@
 package com.bukkit.MasterGuy;
 
 import java.util.HashMap;
+
 import org.bukkit.World;
-//import org.bukkit.Material;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 
@@ -152,7 +152,7 @@ public class FillerPlayerListener extends PlayerListener {
     			}
 				while(minZ <= maxZ) {
 					try {
-						world = this.plugin.getServer().getWorlds()[0];
+						world = this.plugin.getServer().getWorlds().get(0);
 						world.getBlockAt(minX, minY, minZ).setTypeId(blockType);
 					} catch (Exception e) {
 						log("Fill/FillHollow: Fail at "+minX+"/"+minY+"/"+minZ+"!");
@@ -195,7 +195,7 @@ public class FillerPlayerListener extends PlayerListener {
     			}
 				while(minZ <= maxZ) {
 					try {
-						world = this.plugin.getServer().getWorlds()[0];
+						world = this.plugin.getServer().getWorlds().get(0);
 						world.getBlockAt(minX, minY, minZ).setTypeId(0);
 					} catch (Exception e) {
 						log("Fill/FillHollow: Fail at "+minX+"/"+minY+"/"+minZ+"!");

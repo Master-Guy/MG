@@ -2,14 +2,15 @@ package com.bukkit.MasterGuy;
 
 import java.io.File;
 import java.util.HashMap;
-import org.bukkit.entity.Player;
+
 import org.bukkit.Server;
-import org.bukkit.event.Event.Priority;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Filler for Bukkit
